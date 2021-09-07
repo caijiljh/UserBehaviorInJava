@@ -187,7 +187,7 @@ public class HotPages {
             resultBuilder.append("窗口结束时间：").append(new Timestamp(timestamp - 1)).append("\n");
 
             // 遍历列表，取top n输出
-            for (int i = 0; i < Math.min(topSize, pageViewCounts.size()); i++) {
+            for (int i = 0; i < Math.min(topSize, pageViewCounts.size()); i++)  {
                 Map.Entry<String, Long> currentItemViewCount = pageViewCounts.get(i);
                 resultBuilder.append("NO ").append(i + 1).append(":")
                         .append(" 页面URL = ").append(currentItemViewCount.getKey())

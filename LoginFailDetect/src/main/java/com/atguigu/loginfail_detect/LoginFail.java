@@ -108,7 +108,7 @@ public class LoginFail {
 
         @Override
         public void onTimer(long timestamp, OnTimerContext ctx, Collector<LoginFailWarning> out) throws Exception {
-            // 定时器触发，说明2秒内没有登录成功来，判断ListState中失败的个数
+            // 定时器触发，说明2秒内没有登录成功来，判断Lis tState中失败的个数
             ArrayList<LoginEvent> loginFailEvents = Lists.newArrayList(loginFailEventListState.get());
             Integer failTimes = loginFailEvents.size();
 

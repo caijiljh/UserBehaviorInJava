@@ -47,10 +47,10 @@ public class HotItems {
         env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
 
         // 2. 读取数据，创建DataStream
-//        DataStream<String> inputStream = env.readTextFile("D:\\Projects\\BigData\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv");
+       // DataStream<String> inputStream = env.readTextFile("D:\\MyCode\\learnspace\\UserBehaviorAnalysis\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv");
 
-        Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "localhost:9092");
+        Properties properties = new Properties() ;
+        properties.setProperty("bootstrap.servers", "192.168.226.104:9092");
         properties.setProperty("group.id", "consumer");
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -61,7 +61,7 @@ public class HotItems {
 
         // 3. 转换为POJO，分配时间戳和watermark
         DataStream<UserBehavior> dataStream = inputStream
-                .map(line -> {
+                .map(  line -> {
                     String[] fields = line.split(",");
                     return new UserBehavior(new Long(fields[0]), new Long(fields[1]), new Integer(fields[2]), fields[3], new Long(fields[4]));
                 })
@@ -81,7 +81,7 @@ public class HotItems {
 
         // 5. 收集同一窗口的所有商品count数据，排序输出top n
         DataStream<String> resultStream = windowAggStream
-                .keyBy("windowEnd")    // 按照窗口分组
+                .keyBy("windowEnd")// 按照窗口分组
                 .process(new TopNHotItems(5));   // 用自定义处理函数排序取前5
 
         resultStream.print();
@@ -156,6 +156,7 @@ public class HotItems {
                 @Override
                 public int compare(ItemViewCount o1, ItemViewCount o2) {
                     return o2.getCount().intValue() - o1.getCount().intValue();
+
                 }
             });
 

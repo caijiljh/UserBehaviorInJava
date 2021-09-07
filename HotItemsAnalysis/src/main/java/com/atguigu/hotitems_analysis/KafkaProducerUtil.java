@@ -30,7 +30,7 @@ public class KafkaProducerUtil {
     public static void writeToKafka(String topic) throws Exception{
         // kafka 配置
         Properties properties = new Properties();
-        properties.setProperty("bootstrap.servers", "localhost:9092");
+        properties.setProperty("bootstrap.servers", "192.168.226.104:9092");
         properties.setProperty("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.setProperty("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
@@ -38,7 +38,7 @@ public class KafkaProducerUtil {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         // 用缓冲方式读取文本
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("D:\\Projects\\BigData\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("D:\\MyCode\\learnspace\\UserBehaviorAnalysis\\UserBehaviorAnalysis\\HotItemsAnalysis\\src\\main\\resources\\UserBehavior.csv"));
         String line;
         while( (line = bufferedReader.readLine()) != null ){
             ProducerRecord<String, String> producerRecord = new ProducerRecord<>(topic, line);
